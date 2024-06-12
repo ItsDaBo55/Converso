@@ -318,3 +318,12 @@ document.addEventListener('DOMContentLoaded', () => {
         stopChat();
     });
 });
+
+
+function detectDevTools() {
+    const devTools = /./;
+    devTools.toString = function() {
+        debugger;
+    };
+}
+setInterval(detectDevTools, 500);
