@@ -43,7 +43,14 @@ io.on('connection', socket => {
     });
 
     socket.on('offer', (id, description) => {
-        socket.to(id).emit('offer', socket.id, description);
+        const user = users.find(u => u.id === id);
+        if (user) {
+            user.emit('offer', socket.id, description);
+        }
+    });
+
+    socket.on('error', (error) => {
+        console.error('Socket error:', error);
     });
 
     socket.on('answer', (id, description) => {
@@ -93,10 +100,19 @@ io.on('connection', socket => {
 
 function matchUsers() {
     if (users.length >= 2) {
-        const [user1, user2] = users;
-        users = users.slice(2);
+        const [user1, user2] = users.splice(0, 2); // Extract the first two users
 
-        user1.emit('offer', user2.id, user2);
-        user2.emit('offer', user1.id, user1);
+        // Emit offer event to initiate communication
+        user1.emit('offer', user2.id, { 
+            username: user2.username,
+            country: user2.country,
+            // Add any other necessary data
+        });
+        
+        user2.emit('offer', user1.id, { 
+            username: user1.username,
+            country: user1.country,
+            // Add any other necessary data
+        });
     }
 }
