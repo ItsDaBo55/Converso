@@ -1,10 +1,34 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+    cors: {
+        origin: "*", // Adjust as needed
+        methods: ["GET", "POST"]
+    },
+    pingTimeout: 60000, // Increase the ping timeout to 60 seconds
+    pingInterval: 25000 // Adjust the ping interval as needed
+});
+
+app.use(cors({
+    origin: '*', // Allow any origin for now
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+}));
+
+app.get('/', (req, res) => {
+    console.log("Server is running on 3000")
+    res.send('Hello World!');
+});
+const port = process.env.PORT || 3000
+
+server.listen(port, () => {
+    console.log(`Server is running on ${port}`);
+});
 
 let users = [];
 
