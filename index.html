@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-89ZH9E9MYL"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-89ZH9E9MYL');
+        </script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Connect with random strangers through video and text chats on our Omegle-like platform!">
+        <meta name="keywords" content="Omegle, chat, video chat, text chat, random chat, strangers, social platform">
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
+        <title>Converso</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles.css?cacheBuster=111">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <link rel="stylesheet" id="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-light.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-12 header">
+                <span>
+                    <h1 class="display-4 text-light">
+                    <img src="logo.png" width=auto height=64/>
+                    </h1>
+                </span>
+                </div>
+        </div>
+            <div class="d-flex justify-content-between head">
+                <div class="settings">
+                    <button class="btn btn-secondary" onclick="openSettings()">Settings</button>
+                </div>
+                <div class="user-info">
+                    <img id="userFlag" class="flag">
+                    <span id="userName"></span>
+                    <img id="userAvatar" class="avatar">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <div class="video-chat">
+                        <video id="remoteVideo" autoplay></video>
+                        <video id="localVideo" autoplay muted></video>
+                        <div class="controls">
+                            <button id="startBtn" class="btn btn-primary" onclick="startChat()"><i class="fa-solid fa-play"></i></button>
+                            <button id="stopBtn" class="btn btn-primary" onclick="stopChat()" style="display:none;"><i class="fa-solid fa-pause"></i></button>
+                            <button id="skipBtn" class="btn btn-primary" onclick="skipUser()" style="display:none;"><i class="fa-solid fa-forward"></i></button>
+                            <button id="muteBtn" class="btn btn-primary" onclick="toggleMute()"><i class="fa-solid fa-volume-high"></i></button>
+                            <button id="cameraBtn" class="btn btn-primary" onclick="toggleCamera()">Turn Off Camera</button>
+                        </div>
+                        <div id="statusMessage">Click <i class="fa-solid fa-play"></i> to begin</div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="chat">
+                        <ul class="nav nav-tabs" id="chatTabs" role="tablist" style="display: flex; flex-direction: row; flex-wrap: nowrap;">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="global-tab" data-toggle="tab" href="#globalChat" role="tab">Global Chat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="private-tab" data-toggle="tab" href="#privateChat" role="tab">Private Chat</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="globalChat" role="tabpanel">
+                                <div class="messages" id="globalMessages"></div>
+                                <div class="input-group">
+                                    <textarea type="text" rows="1" id="globalMessageInput" placeholder="Type a message..." class="form-control"></textarea>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" onclick="sendGlobalMessage()">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show active" id="privateChat" role="tabpanel">
+                                <div class="messages" id="privateMessages"></div>
+                                <div class="input-group">
+                                    <textarea type="text" id="privateMessageInput" rows="1" placeholder="Type a message..." class="form-control"></textarea>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" onclick="sendPrivateMessage()">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="settingsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Settings</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn btn-secondary" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+                        <br>
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter username">
+                        <label for="country">Country:</label>
+                        <select id="country" class="form-control">
+                        </select>
+                        <label for="profilePic">Profile Picture URL:</label>
+                        <input type="text" id="profilePic" class="form-control" placeholder="Enter profile picture URL">
+                        <button class="btn btn-primary mt-2" onclick="saveSettings()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+        <script src="countries.js"></script>
+        <script src="scripts.js"></script>
+    </body>
+</html>
