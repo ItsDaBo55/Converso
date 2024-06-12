@@ -40,7 +40,7 @@
         </div>
             <div class="d-flex justify-content-between head">
                 <div class="settings">
-                    <button class="btn btn-secondary" onclick="openSettings()">Settings</button>
+                    <button id="openSettings" class="btn btn-secondary">Settings</button>
                 </div>
                 <div class="user-info">
                     <img id="userFlag" class="flag">
@@ -54,11 +54,11 @@
                         <video id="remoteVideo" autoplay></video>
                         <video id="localVideo" autoplay muted></video>
                         <div class="controls">
-                            <button id="startBtn" class="btn btn-primary" onclick="startChat()"><i class="fa-solid fa-play"></i></button>
-                            <button id="stopBtn" class="btn btn-primary" onclick="stopChat()" style="display:none;"><i class="fa-solid fa-pause"></i></button>
-                            <button id="skipBtn" class="btn btn-primary" onclick="skipUser()" style="display:none;"><i class="fa-solid fa-forward"></i></button>
-                            <button id="muteBtn" class="btn btn-primary" onclick="toggleMute()"><i class="fa-solid fa-volume-high"></i></button>
-                            <button id="cameraBtn" class="btn btn-primary" onclick="toggleCamera()">Turn Off Camera</button>
+                            <button id="startBtn" class="btn btn-primary"><i class="fa-solid fa-play"></i></button>
+                            <button id="stopBtn" class="btn btn-primary" style="display:none;"><i class="fa-solid fa-pause"></i></button>
+                            <button id="skipBtn" class="btn btn-primary" style="display:none;"><i class="fa-solid fa-forward"></i></button>
+                            <button id="muteBtn" class="btn btn-primary"><i class="fa-solid fa-volume-high"></i></button>
+                            <button id="cameraBtn" class="btn btn-primary">Turn Off Camera</button>
                         </div>
                         <div id="statusMessage">Click <i class="fa-solid fa-play"></i> to begin</div>
                     </div>
@@ -80,7 +80,7 @@
                                 <div class="input-group">
                                     <textarea type="text" rows="1" id="globalMessageInput" placeholder="Type a message..." class="form-control"></textarea>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" onclick="sendGlobalMessage()">Send</button>
+                                        <button id="sendGlobalMessage" class="btn btn-primary">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                 <div class="input-group">
                                     <textarea type="text" id="privateMessageInput" rows="1" placeholder="Type a message..." class="form-control"></textarea>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" onclick="sendPrivateMessage()">Send</button>
+                                        <button id="sendPrivateMessage" class="btn btn-primary">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <button class="btn btn-secondary" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+                        <button id="toggleDarkMode" class="btn btn-secondary">Toggle Dark Mode</button>
                         <br>
                         <label for="username">Username:</label>
                         <input type="text" id="username" class="form-control" placeholder="Enter username">
@@ -116,7 +116,7 @@
                         </select>
                         <label for="profilePic">Profile Picture URL:</label>
                         <input type="text" id="profilePic" class="form-control" placeholder="Enter profile picture URL">
-                        <button class="btn btn-primary mt-2" onclick="saveSettings()">Save</button>
+                        <button id="saveSettings" class="btn btn-primary mt-2">Save</button>
                     </div>
                 </div>
             </div>
