@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openSettings(true);
     }
 
-    socket = io.connect('http://localhost:3000');
+    socket = io.connect('https://converso-2ub4.onrender.com');
 
     socket.on('globalMessage', data => {
         addMessage('globalMessages', data.username, data.country, data.profilePic, data.message, data.time, data.gif);
