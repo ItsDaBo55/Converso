@@ -100,7 +100,3 @@ function matchUsers() {
         user2.emit('offer', user1.id, user1);
     }
 }
-
-server.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
-});
