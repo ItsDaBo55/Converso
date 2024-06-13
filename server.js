@@ -21,11 +21,10 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    console.log("Server is running on 3000")
     res.send('Hello World!');
 });
-const port = process.env.PORT || 3000
 
+const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`Server is running on ${port}`);
 });
@@ -38,6 +37,7 @@ io.on('connection', socket => {
     socket.on('join', data => {
         socket.username = data.username;
         socket.country = data.country;
+        socket.avatar = data.avatar;
         users.push(socket);
         matchUsers();
     });
@@ -67,15 +67,11 @@ io.on('connection', socket => {
     });
 
     socket.on('privateMessage', data => {
-        socket.broadcast.emit('privateMessage', data);
+        socket.to(data.to).emit('privateMessage', data); // Send private message to the specific user
     });
 
     socket.on('globalMessage', data => {
         io.emit('globalMessage', data);
-    });
-
-    socket.on('error', (error) => {
-        console.error('Socket error:', error);
     });
 
     socket.on('leave', () => {
