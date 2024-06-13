@@ -40,6 +40,7 @@ io.on('connection', socket => {
         socket.avatar = data.avatar;
         users.push(socket);
         matchUsers();
+        io.emit('userJoined', { username: socket.username, country: socket.country });
     });
 
     socket.on('offer', (id, description) => {
@@ -79,7 +80,6 @@ io.on('connection', socket => {
         if (index > -1) {
             users.splice(index, 1);
         }
-        matchUsers();
     });
 
     socket.on('disconnect', () => {
@@ -96,8 +96,8 @@ function matchUsers() {
         const user1 = users[0];
         const user2 = users[1];
 
-        user1.emit('offer', user2.id, { /* description object */ });
-        user2.emit('offer', user1.id, { /* description object */ });
+        user1.emit('offer', user2.id, {});
+        user2.emit('offer', user1.id, {});
 
         users = users.slice(2); // Remove matched users from the array
     }
