@@ -40,22 +40,21 @@ io.on('connection', socket => {
         socket.avatar = data.avatar;
         users.push(socket);
         matchUsers();
-        io.emit('userJoined', { username: socket.username, country: socket.country });
     });
 
-    socket.on('offer', (id, description) => {
-        socket.to(id).emit('offer', socket.id, description);
+    socket.on('offer', (data) => {
+        socket.to(data.to).emit('offer', { from: socket.id, description: data.description });
     });
 
-    socket.on('answer', (id, description) => {
-        socket.to(id).emit('answer', description);
+    socket.on('answer', (data) => {
+        socket.to(data.to).emit('answer', { from: socket.id, description: data.description });
     });
 
-    socket.on('candidate', candidate => {
+    socket.on('candidate', (candidate) => {
         socket.broadcast.emit('candidate', candidate);
     });
 
-    socket.on('mute', data => {
+    socket.on('mute', (data) => {
         socket.broadcast.emit('mute', data);
     });
 
@@ -67,15 +66,15 @@ io.on('connection', socket => {
         matchUsers();
     });
 
-    socket.on('privateMessage', data => {
+    socket.on('privateMessage', (data) => {
         socket.to(data.to).emit('privateMessage', data); // Send private message to the specific user
     });
 
-    socket.on('globalMessage', data => {
+    socket.on('globalMessage', (data) => {
         io.emit('globalMessage', data);
     });
 
-    socket.on('leave', data => {
+    socket.on('leave', (data) => {
         const index = users.indexOf(socket);
         if (index > -1) {
             users.splice(index, 1);
@@ -97,8 +96,8 @@ function matchUsers() {
         const user1 = users[0];
         const user2 = users[1];
 
-        user1.emit('offer', user2.id, {});
-        user2.emit('offer', user1.id, {});
+        user1.emit('matched', {id: user2.id, username: user2.username, country: user2.country, avatar: user2.avatar});
+        user2.emit('matched', {id: user1.id, username: user1.username, country: user1.country, avatar: user1.avatar});
 
         users = users.slice(2); // Remove matched users from the array
     }
