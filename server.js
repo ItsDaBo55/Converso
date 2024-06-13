@@ -75,7 +75,7 @@ io.on('connection', socket => {
         io.emit('globalMessage', data);
     });
 
-    socket.on('leave', () => {
+    socket.on('leave', data => {
         const index = users.indexOf(socket);
         if (index > -1) {
             users.splice(index, 1);
