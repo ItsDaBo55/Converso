@@ -50,14 +50,14 @@ io.on('connection', socket => {
         socket.to(data.to).emit('answer', { from: socket.id, description: data.description });
     });
 
-    socket.on('candidate', (candidate) => {
-        socket.broadcast.emit('candidate', candidate);
+    socket.on('candidate', (data) => {
+        socket.to(data.to).emit('candidate', data.candidate);
     });
 
     socket.on('mute', (data) => {
-        socket.broadcast.emit('mute', data);
+        socket.to(data.to).emit('mute', data);
     });
-
+    
     socket.on('skip', () => {
         const index = users.indexOf(socket);
         if (index > -1) {
