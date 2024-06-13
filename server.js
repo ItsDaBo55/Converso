@@ -51,7 +51,7 @@ io.on('connection', socket => {
     });
 
     socket.on('candidate', (data) => {
-        socket.to(data.to).emit('candidate', data.candidate);
+        socket.to(data.to).emit('candidate', { candidate: data.candidate });
     });
 
     socket.on('mute', (data) => {
