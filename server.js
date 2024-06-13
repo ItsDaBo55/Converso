@@ -80,6 +80,7 @@ io.on('connection', socket => {
         if (index > -1) {
             users.splice(index, 1);
         }
+        socket.to(data.other).emit('left'); // Notify the other user that this user has left
     });
 
     socket.on('disconnect', () => {
